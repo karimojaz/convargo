@@ -141,6 +141,40 @@ const actors = [{
   }]
 }];
 
+function getTrucker(id){
+  for (var i=0; i < truckers.length; i++){
+    if(truckers[i].id == id){
+      return truckers[i];
+    }
+  }
+  return {};
+}
+
+function shippingsprices(){
+  for (var i=0; i < deliveries.length; i++){
+          var trucker = getTrucker(deliveries[i].truckerId);
+          deliveries[i].price = deliveries[i].distance*trucker.pricePerKm + deliveries[i].volume*trucker.pricePerVolume;
+  }
+}
+
+function decreasesprices(){
+  for(var i=0; i < deliveries.length; i++){
+    if(deliveries[i].volume >= 5 && deliveries[i].volume <= 10){
+      deliveries[i].price *= 0.1;
+    }
+    if(deliveries[i].volume >= 10 && deliveries[i].volume <= 25){
+      deliveries[i].price *= 0.3;
+    }
+    if(deliveries[i].volume >= 25){
+      deliveries[i].price *= 0.5;
+    }
+  }
+}
+
+
+
+shippingsprices();
+decreasesprices();
 console.log(truckers);
 console.log(deliveries);
 console.log(actors);
