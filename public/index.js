@@ -179,18 +179,27 @@ function commissionprices(){
 
     var commission = deliveries[i].price * 0.3;
     deliveries[i].commission.insurance = commission * 0.5;
-    commission -= deliveries[i].commission;
+    commission -= deliveries[i].commission.insurance;
 
     deliveries[i].commission.treasury = Math.ceil((deliveries[i].distance/500)+1);
-    commission -= deliveries[i].commission;
+    commission -= deliveries[i].commission.treasury;
 
     deliveries[i].commission.convargo += commission;
+  }
+}
+
+function deductibleprices(){
+  for (var i=0; i < deliveries.length; i++){
+    if(deliveries[i].options.deductibleReduction){
+      deliveries[i].price += deliveries[i].volume;
+    }
   }
 }
 
 shippingsprices();
 decreasesprices();
 commissionprices();
+deductibleprices();
 console.log(truckers);
 console.log(deliveries);
 console.log(actors);
