@@ -223,6 +223,7 @@ shippingsprices();
 decreasesprices();
 commissionprices();
 deductibleprices();
+payactor();
 console.log(truckers);
 console.log(deliveries);
 console.log(actors);
