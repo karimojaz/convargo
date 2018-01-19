@@ -74,7 +74,7 @@ var deliveries = [{
 //list of actors for payment
 //useful from exercise 5
 const actors = [{
-  'deliveryId': 'bba9500c-fd9e-453f-abf1-4cd8f52af377',
+  'rentalId': 'bba9500c-fd9e-453f-abf1-4cd8f52af377',
   'payment': [{
     'who': 'shipper',
     'type': 'debit',
@@ -191,10 +191,33 @@ function commissionprices(){
 function deductibleprices(){
   for (var i=0; i < deliveries.length; i++){
     if(deliveries[i].options.deductibleReduction){
-      deliveries[i].price += deliveries[i].volume;
+      deliveries[i].commission.convargo += deliveries[i].volume;
     }
   }
 }
+
+function getActor(id){
+  for(var i=0; i < actors.length; i++){
+    if(actors[i].rentalId == id){
+      return actors[i];
+    }
+  }
+  return {};
+}
+
+function payactor(){
+  for(var i=0; i < actors.length; i++){
+    var actor= getActor(actors[i].rentalId);
+    actor.payment[0].amount=deliveries[i].price;
+    actor.payment[1].amount = deliveries[i].price *0.70;
+    actor.payment[2].amount = deliveries[i].commission.insurance;
+    actor.payment[3].amount = deliveries[i].commission.treasury;
+    actor.payment[4].amount = deliveries[i].commission.convargo;
+  }
+}
+
+console.log(deliveries);
+console.log(actors);
 
 shippingsprices();
 decreasesprices();
