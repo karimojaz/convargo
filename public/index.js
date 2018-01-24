@@ -215,10 +215,7 @@ function payactor(){
     actor.payment[4].amount = deliveries[i].commission.convargo;
   }
 }
-
-console.log(deliveries);
-console.log(actors);
-
+cd
 shippingsprices();
 decreasesprices();
 commissionprices();
